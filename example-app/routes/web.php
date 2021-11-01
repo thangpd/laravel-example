@@ -28,17 +28,18 @@ Route::get( '/about-us', function () {
 Route::get( '/posts', function () {
 
 
-	return 'posts';
+	return view( 'posts', [ 'posts' => \App\Models\Posts::all() ] );
 } );
 
 
 Route::get( '/posts/{post}', function ( $slug ) {
 
 
-	$content = \App\Models\Posts::findBySlug( $slug );
+//	$post = \App\Models\Posts::findBySlug( $slug );
+	$post = \App\Models\Posts::findBySlugFromCollection( $slug );
 
 
-	return view( 'posts', [ 'content' => $content ] );
+	return view( 'posts_details', [ 'post' => $post ] );
 
 	// where post var like a-Z and can include -
 } )->where( 'post', '[a-z_\-]+' );
